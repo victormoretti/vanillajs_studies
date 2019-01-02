@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Book List</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<main>
+		<header>
+			<h1>Book List</h1>
+		</header>
+		<div>
+			<form action="#" id="bookRegisterForm">
+				<label for="bookTitle">
+					<span>Book's Title</span>
+					<input type="text" placeholder="Name" id="bookTitle" name="bookTitle">
+				</label>
+				<label for="bookAuthor">
+					<span>Author's name</span>
+					<input type="text" placeholder="Author" id="bookAuthor" name="bookAuthor">
+				</label>
+				<label for="bookIsbn">
+					<span>ISBN</span>
+					<input type="text" placeholder="ISBN" id="bookIsbn" name="bookIsbn">
+				</label>
+				<input type="submit" value="Register" id="register">
+			</form>
+		</div>
+		<div>
+			<table id="bookList">
+				<tr class="head">
+					<td>Title</td>
+					<td>Author</td>
+					<td colspan="2">ISBN</td>
+				</tr>
+				<tr>
+					<td>Victor</td>
+					<td>Victor</td>
+					<td>23242424</td>
+					<td><a href="#" class="delete">X</a></td>
+				</tr>
+			</table>
+		</div>
+	</main>
+	<script src="app.js"></script>
+</body>
+</html>
