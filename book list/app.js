@@ -11,20 +11,7 @@ class Book {
 class UI{
 
 	static displayBooks(){
-		let books = [{
-			title: 'Livro',
-			author: 'Victor',
-			isbn: 123456
-		},{
-			title: 'Livro',
-			author: 'Victor',
-			isbn: 123456
-		},{
-			title: 'Livro',
-			author: 'Victor',
-			isbn: 123456
-		}];
-
+		const books = Store.getItems();
 		books.forEach( book => UI.addListItem(book) );
 	}
 
@@ -51,11 +38,39 @@ class UI{
 			el.parentElement.parentElement.remove();
 		}
 	}
+
 }
 
 
-// STORE CLASS: HANDLES STORAGE
+// STORE CLASS: HANDLES LOCAL STORAGE
+class Store {
+	static getItems(){
+		let items;
 
+		if( localStorage.getItem('books') === null ){
+			items = [];
+		}else{
+			items = JSON.parse(localStorage.getItem('books'));
+		}
+		return items;
+	}
+
+	static addItem(book){
+		const books = Store.getItems();
+		books.push(book);
+		localStorage.setItem('books', JSON.stringify(books) );
+	}
+
+	static removeItem(isbn){
+		let books = Store.getItems();
+		books.filter( (book,index) => {
+			if( book.isbn == isbn ){
+				books.splice(index,1);
+			}
+		});
+		localStorage.setItem('books', JSON.stringify(books));
+	}
+}
 
 // EVENT: ADDING A BOOK
 document.querySelector('#bookRegisterForm')
@@ -68,6 +83,8 @@ document.querySelector('#bookRegisterForm')
 
 		const book = new Book(title, author, isbn);
 
+		Store.addItem(book);
+
 		UI.addListItem(book);
 		UI.clearFields();
 	});
@@ -79,5 +96,7 @@ document.addEventListener('DOMContentLoaded', UI.displayBooks);
 document.querySelector('#list')
 	.addEventListener('click', e => {
 		e.preventDefault();
+
+		Store.removeItem(e.target.parentElement.previousElementSibling.textContent);
 		UI.removeListItem(e.target);
 	});
