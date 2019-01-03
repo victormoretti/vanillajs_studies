@@ -81,12 +81,16 @@ document.querySelector('#bookRegisterForm')
 		const author = document.querySelector('#bookAuthor').value;
 		const isbn = document.querySelector('#bookIsbn').value;
 
-		const book = new Book(title, author, isbn);
+		if( title == '' || author == '' || isbn == '' ){
+			alert('Please, fill all of the form fields');
+		}else{
+			const book = new Book(title, author, isbn);
 
-		Store.addItem(book);
+			Store.addItem(book);
 
-		UI.addListItem(book);
-		UI.clearFields();
+			UI.addListItem(book);
+			UI.clearFields();
+		}		
 	});
 
 // EVENT: DISPLAYS BOOKLIST WHEN PAGE STARTS
