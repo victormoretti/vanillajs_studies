@@ -57,5 +57,21 @@
   <audio data-key="75" src="sounds/tom.wav"></audio>
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
+
+<script>
+function playAudio(event){
+  const audioElement = document.querySelector(`audio[data-key="${event.keyCode}"]`);
+
+  // prevent to call the play function from a non existent element
+  if( !audioElement ) return;
+
+  // rewinds the audio in case it is already playing
+  audioElement.currentTime = 0;
+
+  // hit that drum baby!
+  audioElement.play();
+}
+window.addEventListener('keydown', playAudio);
+</script>
 </body>
 </html>
