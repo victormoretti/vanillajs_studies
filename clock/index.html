@@ -16,5 +16,30 @@
 		</div>
 	</div>
 </main>
+<script>
+const hour = document.querySelector('.hour');
+const minute = document.querySelector('.minute');
+const second = document.querySelector('.second');
+
+function setDate(){
+	const date = new Date;
+	const hoursNow = date.getHours();
+	const minutesNow = date.getMinutes();
+	const secondsNow = date.getSeconds();
+
+	const hourDegs = (hoursNow * 360 / 60) + 90;
+	const minuteDegs = (minutesNow * 360 / 60) + 90;
+	const secondDegs = (secondsNow * 360 / 60) + 90;
+
+	hour.style.transform = `rotate(${hourDegs}deg)`;
+	minute.style.transform = `rotate(${minuteDegs}deg)`;
+	second.style.transform = `rotate(${secondDegs}deg)`;
+
+}
+hour.style.transform = `rotate(0deg)`;
+minute.style.transform = `rotate(0deg)`;
+second.style.transform = `rotate(0deg)`;
+setInterval(setDate, 1000);
+</script>
 </body>
 </html>
