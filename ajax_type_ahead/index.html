@@ -19,13 +19,14 @@ const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb
 const cities = [];
 
 const searchInput = document.querySelector('.search');
+const suggestions = document.querySelector('.suggestions');
 
-//fetching data from API endpoint and storing into cities array
+// Fetching data from API endpoint and storing into cities array
 fetch(endpoint)
   .then(blob => blob.json())
   .then(data => cities.push(...data));
 
-
+// Matching function
 function findMatches(wordToMatch, citiesArray){
   return citiesArray.filter( place => {
     const regex = new RegExp(wordToMatch, 'gi');
@@ -33,17 +34,36 @@ function findMatches(wordToMatch, citiesArray){
   });
 }
 
+// Predict function
 let searchState = '';
 function predict(event){
 
-  //prevent script from running when input value hasn't changed
-  if(searchState == event.target.value || event.target.value == ''){
+  // Prevent script from running when input value hasn't changed
+  if(searchState == event.target.value){
     return;
   }
   searchState = event.target.value;
 
   const matches = findMatches(searchState, cities);
 
+  if( matches.length == 0 || searchState == ''){
+    suggestions.innerHTML = `
+      <li>Filter for a city</li>
+      <li>or a state</li>`;
+  }else{
+    const html = matches.map( result => {
+      const regex = new RegExp(searchState, 'gi');
+      const cityHl = result.city.replace(regex, `<span class="hl">${searchState}</span>`);
+      const stateHl = result.state.replace(regex, `<span class="hl">${searchState}</span>`);
+      return `
+        <li>
+          <span class="name">${cityHl}, ${stateHl}</span>
+          <span class="population">${result.population}</span>
+        </li>`;
+    }).join('');
+    suggestions.innerHTML = html;
+
+  }
 }
 
 searchInput.addEventListener('keyup', predict);
